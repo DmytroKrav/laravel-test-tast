@@ -28,7 +28,13 @@ class AuthService
     {
         $userData = new UserDto();
         $userData->load($request->all());
+
+        if ($this->checkIfUserAllreadyExists($userData->email)) {
+            throw new UnprocessableEntityHttpException('Email is already in use');
+        }
+
         $userData->password = \Hash::make($userData->password);
+
         if ($savedUser = $this->repository->createUser($userData)) {
             $token = JWTAuth::fromUser($savedUser);
             $userData->accessTokenData = $this->withAccessTokenData($token);
@@ -112,5 +118,10 @@ class AuthService
     private function guard()
     {
         return Auth::guard('api');
+    }
+
+    private function checkIfUserAllreadyExists(string $userEmail)
+    {
+        return $this->repository->findByEmail($userEmail);
     }
 }
