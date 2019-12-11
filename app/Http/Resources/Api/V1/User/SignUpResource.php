@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources\Api\V1\User;
 
-class SignUpResource extends \Illuminate\Http\Resources\Json\JsonResource
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class SignUpResource extends JsonResource
 {
     public function toArray($request)
     {

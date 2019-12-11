@@ -4,9 +4,19 @@ namespace App\Http\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UsersMessagesEntity extends Model
+/**
+ * Class UsersMessages
+ * @package App\Http\Entities
+ * @property string $message
+ * @property integer sender_id
+ * @property integer receiver_id
+ * @property string $created_at
+ */
+class UsersMessages extends Model
 {
     const UPDATED_AT = null;
+
+    protected $dateFormat = 'U';
 
     public $timestamps = true;
 

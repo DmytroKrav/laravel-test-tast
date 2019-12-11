@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Api\V1\User;
 
-use App\Http\Entities\User\UserEntity;
+use App\Http\Entities\User\Users;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class UsersCollection extends ResourceCollection
@@ -10,11 +10,10 @@ class UsersCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => $this->resource->transform(function (UserEntity $item) use ($request) {
+            'data' => $this->resource->transform(function (Users $item) use ($request) {
                 return [
                     'id' => $item->id,
                     'name' => $item->name,
-                    'created_at' => $item->created_at,
                 ];
             })
         ];

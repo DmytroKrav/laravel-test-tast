@@ -3,6 +3,7 @@
 namespace App\Http\Entities\User;
 
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * Class UserEntity
@@ -13,11 +14,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $refresh_token
  * @property string $email
  */
-class UserEntity extends Model
+class Users extends Model implements JWTSubject
 {
     public $timestamps = true;
 
-    protected $table = 'users';
+    protected $dateFormat = 'U';
 
     protected $fillable = [
         'name',
@@ -30,13 +31,23 @@ class UserEntity extends Model
         'created_at' => 'timestamp',
     ];
 
-    public function ownMessages()
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
     {
-        return $this->hasMany('App\Entity\Chat\UserMessageEntity', 'sender_id', 'id');
+        return $this->getKey();
     }
 
-    public function receivedMessages()
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
     {
-        return $this->hasMany('App\Entity\Chat\UserMessageEntity', 'sender_id', 'id');
+        return [];
     }
 }

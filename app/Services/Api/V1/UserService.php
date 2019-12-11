@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Services\Api\V1;
+namespace App\Services\Api\V1;
 
-use App\Http\Repositories\User\UserRepository;
+use App\Http\Repositories\UserRepository;
 use App\Http\Resources\Api\V1\User\UsersCollection;
 use Illuminate\Support\Facades\Auth;
 

@@ -11,11 +11,15 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function () {
         Route::post('/sign-up', 'AuthController@signUp');
         Route::post('/sign-in', 'AuthController@signIn');
     });
+    Route::group(['prefix' => 'auth', 'middleware' => 'jwt.auth'], function () {
+        Route::get('/generate-new-access-token', 'AuthController@generateNewAccessToken');
+    });
+
     Route::group(['prefix' => 'users', 'middleware' => 'jwt.auth'], function () {
         Route::get('/all-members', 'UserController@getAllOtherUsers');
     });
     Route::group(['prefix' => 'chat', 'middleware' => 'jwt.auth'], function () {
         Route::post('/', 'ChatController@sendMessage');
-        Route::get('/messages/{sender_id}', 'ChatController@getAllMessagesFrom');
+        Route::get('/messages/{sender_id}', 'ChatController@getAllMessagesFrom')->where('id', '[1-9]+');;
     });
 });

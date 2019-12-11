@@ -4,6 +4,10 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +50,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof HttpException) {
+            return new JsonResponse([
+                'errors' => [
+                    'messages' => $exception->getMessage(), 'statusCode' => $exception->getStatusCode()
+                ]
+            ], $exception->getStatusCode());
+
+        }
         return parent::render($request, $exception);
     }
 }

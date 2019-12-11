@@ -17,7 +17,7 @@ class CreateUsersMessagesTable extends Migration
             $table->integer('sender_id')->unsigned()->index('sender_id');
             $table->integer('receiver_id')->unsigned();
             $table->string('message');
-            $table->timestamp('created_at')->nullable();
+            $table->integer('created_at')->nullable();
 
             $table->foreign('sender_id')->references('id')->on('users');
             $table->foreign('receiver_id')->references('id')->on('users');

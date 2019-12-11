@@ -12,11 +12,4 @@ class AllMessageFromRequest extends BaseRequest
             'sender_id' => 'required|integer',
         ];
     }
-
-    public function all($keys = null)
-    {
-        $data = parent::all();
-        $data['sender_id'] = $this->route('sender_id');
-        return $data;
-    }
 }
